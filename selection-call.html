@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>u4bi d3 - selection call</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <style>
+            body{ background: #F2F2F2; margin: 0; }
+
+            .root{
+                margin: auto;
+                margin-top : 100px;
+                width: 400px;
+                height: 400px;
+                border: 1px solid #666;
+            }
+
+            .bar {
+                height: 30px;
+                color: green;
+                fill: lightgreen;
+                stroke: black;
+                stroke-width: 1;
+            }            
+        </style>
+    </head>
+    <body>
+
+
+
+        <div class="root"></div>
+
+
+
+        
+        <script>
+            console.log(d3.version);
+
+            d3.json('model/data.json', (error, json) => {
+
+                let update = d3.select('.root')
+                                .append('svg')
+                                .attr('width', '100%')
+                                .attr('height', '100%')
+                                .selectAll('g')
+                                .data(json.data)
+                
+                let enter = update.enter()
+                            .append('g')
+                            .attr('transform', (v, i) => `translate(0, ${ i * 33 })`)
+                
+                
+                const scaleBar = (selection, scale) => selection.style('transform', `scaleX(${ scale})`);
+                const fade = (selection, opacity) => selection.style('fill-opacity', opacity);
+                const setFill = (selection, color) => selection.style('fill', color);
+
+
+                enter.append('rect')
+                    .style('width', v => v.score)
+                    .attr('class', 'bar')
+                    .on('mouseover', function (v, i, elements) {
+                        d3.select(this)
+                            .call(scaleBar, 2)
+                            .call(setFill, 'orange')
+                        
+                        d3.selectAll(elements)
+                            .filter(':not(:hover)')
+                            .call(fade, 0.5)
+
+                    })
+                    .on('mouseout', function (v, i, elements) {
+                        d3.select(this)
+                            .call(scaleBar, 1)
+                            .call(setFill, 'lightgreen')
+                    
+                        d3.selectAll(elements)
+                            .call(fade, 1)
+
+                    });
+            
+
+                enter.append('text')
+                    .attr('y', 20)
+                    .text( (v) => v.name)
+
+            });
+            
+        </script>
+    </body>
+</html>

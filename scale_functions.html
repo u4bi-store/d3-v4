@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>u4bi d3 - scale functions</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+
+        <script>
+            console.log(d3.version);
+
+            const scaleQuantize = d3.scaleQuantize()
+                                    .domain([0, 100])
+                                    .range([
+                                        '적음',
+                                        '중간',
+                                        '높음'
+                                    ]);
+
+            d3.json('../model/data.json', (error, json) => {
+
+                json.data.map( (v) => console.log(v.name , scaleQuantize(v.score)));
+                
+            });
+            
+        </script>
+    </body>
+</html>

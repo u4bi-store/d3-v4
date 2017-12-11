@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://d3js.org/d3.v4.min.js"></script>            
+    </head>
+    <body>
+        <script>
+
+            var svg = d3.select('body')
+                    .append('svg')
+                    .attr('width', 300)
+                    .attr('height', 200)
+                    .style('border', '1px solid red')
+
+            function render() {
+
+                var time = svg.append('circle')
+                                .attr('fill', '#FF00FF')
+                                .attr('r', 17);
+                
+                repeat();
+                
+                function repeat() {
+
+                    time.attr('cx', 0 + 17)
+                        .attr('cy', 100)
+                        .transition()
+                        .duration(2000)
+                        .attr('cx', 300 - 17)
+                        .transition()
+                        .duration(2000)
+                        .attr('cx', 0 + 17)
+                        .on('end', repeat);
+                };
+
+            };
+
+            render();
+        </script>
+    </body>
+</html>

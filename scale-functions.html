@@ -18,7 +18,7 @@
                                         '높음'
                                     ]);
 
-            d3.json('../model/data.json', (error, json) => {
+            d3.json('./model/data.json', (error, json) => {
 
                 json.data.map( (v) => console.log(v.name , scaleQuantize(v.score)));
                 

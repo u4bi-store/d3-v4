@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>u4bi d3 - util functions</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+
+        <script>
+            console.log(d3.version);
+
+            d3.json('./model/data.json', (error, json) => {
+                
+                var data = json.data.map( (v) => v.score);
+                    min = d3.min(data),
+                    max = d3.max(data),
+                    extent = d3.extent(data),
+                    sum = d3.sum(data),
+                    mean = d3.mean(data),
+                    median = d3.median(data),
+                    quantile1 = d3.quantile(data,0),
+                    quantile2 = d3.quantile(data,1),
+                    quantile3 = d3.quantile(data,0.15),
+                    variance = d3.variance (data),
+                    deviation = d3.deviation(data);
+
+                console.log('최소 ', min);
+                console.log('최대 ', max);
+                console.log('최소최대 ', extent);
+                console.log('합 ', sum);
+                console.log('평균치 ', mean);
+                console.log('중앙값 ', median);
+                console.log('첫째값 ', quantile1);
+                console.log('끝값 ', quantile2);
+                console.log('등분값 ', quantile3);
+                console.log('분산 ', variance);
+                console.log('표준편차 ', deviation);
+                
+            });
+
+        </script>
+    </body>
+</html>
